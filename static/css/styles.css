@@ -1,0 +1,863 @@
+/* Base styles */
+@font-face {
+    font-family: 'Montserrat';
+    src: url("/static/Montserrat-Regular.ttf");
+}
+
+body {
+    font-family: Montserrat;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    color: #555;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: white;
+
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+nav h2 {
+    margin: 0;
+    text-align: left;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This will ensure that the three inner divs are spaced out */
+    width: 100%;
+    border-bottom: 1px solid #888;
+}
+
+/* The following CSS ensures each of the inner containers take up the right amount of space. */
+.welcome-message {
+    flex: 1; /* take up 1 portion of space */
+    text-align: left;
+}
+
+.logo-container {
+    flex: 1; /* take up 1 portion of space */
+    text-align: center;
+}
+
+.logout-container {
+    flex: 1;
+    /* text-align: right; */
+    justify-content: right;
+    display: flex;
+    gap: 50px;
+}
+
+.logout-container a{
+    padding-top: 15px; 
+}
+
+a.btn-logout{
+    padding-top: 9px;
+}
+
+
+/* Main content styles */
+main {
+    font-family: Montserrat;
+    /* padding: 20px; */
+    background-color: #fff;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+    border-radius: 10px;
+    /* margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px; */
+    /* margin: 50px; */
+    overflow: auto;
+    /* padding:50px; */
+    height: 100vh;
+
+  
+
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    /* bottom: 0; */
+}
+
+/* Message styling */
+.messages>div {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+/* You can adjust the color codes based on your design preferences */
+.messages>.info {
+    background-color: #2196F3;
+    /* blue */
+}
+
+.messages>.success {
+    background-color: #4CAF50;
+    /* green */
+}
+
+.messages>.warning {
+    background-color: #FFC107;
+    /* amber */
+}
+
+.messages>.error {
+    background-color: #F44336;
+    /* red */
+}
+
+/* Form styling */
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+
+
+h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+form select.form-control {
+    padding: 10px 15px;
+
+}
+
+/* Quotation List styling */
+.quotation-list {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.quotation-list button.btn-link {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: black
+}
+
+.quotation-list button.btn-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Back button styling */
+.btn-back {
+    display: block;
+    margin-top: 20px;
+}
+
+.btn-back button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.btn-back button:hover {
+    background-color: #aaa;
+    /* Darker grey on hover */
+}
+
+/* Section styling for different user roles */
+.section {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    /* Light grey background */
+    text-transform: uppercase;
+
+}
+
+.requester-section,
+.requester-section .btn-link button {
+    border: 2px solid #A200F2;
+    /* Blue for requester */
+    color: #A200F2;
+}
+
+.verifier-section,
+.verifier-section .btn-link button {
+    border: 2px solid #00A38D;
+    /* Amber for verifier */
+    color: #00A38D;
+}
+
+.approver-section,
+.approver-section .btn-link button {
+    border: 2px solid #00A7BD;
+    /* Green for approver */
+    color: #00A7BD;
+}
+
+.requester-section .btn-link button:hover {
+    background-color: #A200F2;
+    color: white;
+}
+
+.verifier-section .btn-link button:hover {
+    background-color: #00A38D;
+    color: white;
+}
+
+.approver-section .btn-link button:hover {
+    background-color: #00A38D;
+    color: white;
+}
+
+
+
+/* Updated button styling */
+button,
+.btn-link button {
+    font-family: Montserrat;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    /* Rounded edges */
+}
+
+button:hover,
+.btn-link button:hover {
+    transform: translateY(-3px);
+    /* Creates a subtle lift effect */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:active,
+.btn-link button:active {
+    transform: translateY(1px);
+    /* Pressed down effect */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific color variations */
+.btn-back button {
+    background-color: white;
+    border: 2px solid #009bb3;
+    color: black;
+}
+
+form button[type="submit"]:hover,
+.btn-back button:hover {
+    background-color: #009bb3;
+    color: white;
+
+}
+
+.btn-logout button {
+    background-color: #4CAF50;
+    color: white;
+
+}
+
+.btn-logout button:hover {
+    background-color: #ff0000;
+}
+
+.btn-link button {
+    background-color: #f9f9f9;
+    /* Light grey background */
+    color: #333;
+    border: 2px solid #007BFF;
+    /* Blue border */
+}
+
+.btn-link button:hover {
+    background-color: #e6e6e6;
+    /* Slightly darker grey on hover */
+    /* border-color: #0056b3; */
+}
+
+/* In case you add more button variations in the future */
+.btn-primary {
+    background-color: #007BFF;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #565e64;
+}
+
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    /* font-style: italic; */
+    /* text-decoration: underline; */
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+    /* This will allow us to position our error messages effectively */
+
+}
+
+.my-custom-class {
+    font-family: Montserrat;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /* width: 100%; */
+    box-sizing: border-box;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.my-custom-class:focus {
+    border-color: #007BFF;
+    /* Blue color for focus */
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    /* Subtle blue glow when the field is active */
+}
+
+.errorlist {
+    position: absolute;
+    top: 30px;
+    /* Adjust if necessary */
+    right: 139px;
+    color: #F44336;
+    /* Red color for errors */
+    font-size: 12px;
+    /* Smaller font size for error messages */
+    
+}
+
+.save-button {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #4CAF50;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+#updateButton:hover{
+    background-color: #4CAF50;
+
+}
+
+#submitForm:hover {
+    background-color: #4CAF50;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:active {
+    transform: translateY(1px);
+    /* Pressed down effect */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Centering the login section */
+.login-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 80vh; */
+    /* border: solid 1px black; */
+    /* Adjust based on your preference. 80vh will occupy 80% of the viewport height. */
+}
+
+.login-box {
+    max-width: 400px;
+    /* margin: 5% auto; */
+    margin: auto;
+    padding: 30px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-box h2{
+    text-decoration: none;
+    font-style: normal;
+}
+
+.login-button{
+    background-color: #23e4cb;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    /* Adjust this value to control spacing between the buttons */
+    justify-content: center;
+    /* Centers the buttons in the container */
+    margin-top: 20px;
+    /* Adds space above the button group */
+}
+
+/* Save button styling */
+.save-button {
+    display: block;
+    margin-top: 20px;
+}
+
+.custom-file-upload {
+    padding: 10px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #f3f3f3;
+}
+
+/* You can style this further to match your design */
+
+/* Table styles */
+#quotation-list, #verification-queue, #verification-history, #approve-queue, #approve-history, #final-approve-queue, #final-approve-history, #finance-queue, #finance-history, #all-quotation-list{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+
+#quotation-list ,#all-quotation-list, #verification-queue, #verification-history, #approve-queue, #approve-history, #final-approve-queue, #final-approve-history, #finance-queue, #finance-history, #all-quotation-list
+, td {
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: #f2f2f2;
+
+    /* text-align: center;   */
+}
+
+#quotation-list th {
+    background-color: #A200F2;
+    color: white;
+}
+
+.btn-link-quotation_list {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #b860e4;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-link-quotation_list:hover {
+    background-color: #b860e4;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+#verification-queue th, #verification-history th {
+    background-color: #00A38D;
+    color: white;
+}
+
+.btn-link-verification-queue, .btn-link-verification-history {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #60c6b8;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-link-verification-queue:hover, #btn-link-verification-history:hover{
+    background-color: #60c6b8;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+#approve-queue th, #approve-history th {
+    background-color: #00A7BD;
+    color: white;
+}
+
+.btn-link-approve-queue, .btn-link-approve-history {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #3dc6d8;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-link-approve-queue:hover, #btn-link-approve-history:hover{
+    background-color: #3dc6d8;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+td {
+    text-transform: lowercase;
+}
+
+td::first-letter {
+    text-transform: capitalize;
+}
+
+.quotation-details, #quotation-verify-approve {
+
+    /* margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px; */
+    border: solid 1px;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+    overflow-x: visible;
+    width: 800px;
+    margin: 0 auto; /* This centers the div horizontally */
+    /* padding: 56.4px 40px; This is 1/20th of our calculated height and width, respectively */
+    background-color: #ffffff; /* Optional: If you want to visualize it against a different background */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+
+}
+
+#container {
+    /* max-width: 900px; */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffffae;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    border-radius: 8px;
+}
+
+#create-request {
+    width: 800px; /* Mimic A4 width */
+    background-color: #fff; /* White like paper */
+    margin: 20px auto; /* Center the container */
+    padding: 40px 50px; /* Inner padding for the content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* A slight shadow to give depth */
+    border-radius: 5px; /* Optional: Slight curve to the edges of the paper */
+}
+
+#create-request textarea{
+    padding: 10px;
+    min-height: 120px; 
+    resize: none;
+}
+
+/* General style for the dropdown */
+.select-wrapper {
+    margin-bottom: 20px;
+    position: relative;
+    width: 250px;
+}
+
+/* Style for the select dropdown */
+.select-wrapper select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    /* Hide the default arrow icon in some browsers */
+    /* text-transform: uppercase; */
+}
+
+/* Style for the label of the dropdown */
+.select-wrapper label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#remarks {
+    width: 500px;
+    height: 150px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.error-credentials p{
+    color: #ff0000;
+}
+
+
+input,
+textarea,
+select {
+    font-family: Montserrat;
+
+}
+
+#list-container {
+    padding: 20px;
+    
+}
+
+#list-container h2{
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.not-logged-in {
+    text-align: center;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin: 20px;
+}
+
+.not-logged-in h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.not-logged-in p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.not-logged-in ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.not-logged-in li {
+    margin-bottom: 10px;
+}
+
+
+
+
+.queue-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%; /* Makes it circular */
+    padding: 2px 6px; /* Adjust as necessary */
+    font-size: 0.8em; /* Adjust as necessary */
+    margin-left: 5px; /* Space between the button text and the count */
+    vertical-align: middle;
+}
+
+.department-color {
+    color: red;
+    font-weight: bolder; 
+    text-decoration: underline; /* or any color you want */
+
+}
+
+/* .reminder {
+    color: red;
+    font-weight: bolder; 
+
+} */
+
+.reminder {
+    border: 1px solid red;  /* Adds a red border around the reminder */
+    background-color: #ffe6e6;  /* A light red background color */
+    padding: 10px;  /* Spacing inside the reminder box */
+    margin: 10px 0;  /* Adds space above and below the reminder box */
+    text-align: center;  /* Centers the reminder text */
+    font-weight: bold;  /* Makes the text bold */
+}
+
+.required::after{
+    content: "*";
+    color: red;
+    font-size: 20px;
+}
+
+
+.final-approver-section,
+.final-approver-section .btn-link button {
+    border: 2px solid #FF7543;
+    /* Green for approver */
+    color: #FF7543;
+}
+
+.final-approver-section .btn-link button:hover {
+    /* background-color: #CC3434; */
+    background-color: #FF7543;
+    color: white;
+}
+
+#final-approve-queue th, #final-approve-history th , #all-quotation-list th{
+    background-color: #FF7543;
+    color: white;
+}
+
+.btn-link-final-approve-queue, .btn-link-final-approve-history, .btn-link-all-quotation-list {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #FF7543;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-link-final-approve-queue:hover, #btn-link-final-approve-history:hover, #btn-link-all-quotation-list:hover {
+    background-color: #f58861;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+.finance-section,
+.finance-section .btn-link button {
+    border: 2px solid #D6B400;
+    /* Green for approver */
+    color: #D6B400;
+}
+
+.finance-section .btn-link button:hover {
+    /* background-color: #CC3434; */
+    background-color: #D6B400;
+    color: white;
+}
+
+#finance-queue th, #finance-history th {
+    background-color: #D6B400;
+    color: white;
+}
+
+.btn-link-finance-queue, .btn-link-finance-history {
+    /* width: 100%; Full width button */
+    background-color: white;
+    /* Blue color */
+    border: none;
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    border: 2px solid #D6B400;
+    /* font-weight: bold; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#btn-link-finance-queue:hover, #btn-link-finance-history:hover{
+    background-color: #f3d542;
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.btn-export button {
+    background-color: #1D6F42;
+    color: white;
+
+}
+
+.btn-export button:hover {
+    background-color: #319d62;
+}

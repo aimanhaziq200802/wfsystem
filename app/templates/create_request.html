@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}
+New Request
+{% endblock %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<h1>New Request Form</h1>
+
+<div id="create-request">
+    <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </div>
+    {% endfor %}
+</div>
+
+<div class="reminder">
+    ⓘ Please ensure all information is keyed in correctly before submission. Incorrect submissions will be rejected.
+</div>
+<br>
+
+<form action="{% url 'create_request' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p><label class="required">Title</label>
+        <input type="text" name='title' placeholder='Request for ...' class="form-control" />
+    </p>
+
+
+    <label class="required">Select Entity</label>
+    <select name="entity" class="form-control">
+        <option value="">(None)</option>
+        {% for entity in entities %}
+        <option value="{{ entity.id }}">{{ entity.name|capfirst }}</option>
+        {% endfor %}
+    </select>
+    
+    <label class="required">Select Department</label>
+    <select name="department" class="form-control">
+        <option value="">(None)</option>
+        {% for department in departments %}
+        <option value="{{ department.id }}">{{ department.name|capfirst }}</option>
+        {% endfor %}
+    </select>
+    
+    <label class="required">Select Branch</label>
+    <select name="branch" class="form-control">
+        <option value="">(None)</option>
+        {% for branch in branches %}
+        <option value="{{ branch.id }}">{{ branch.name|capfirst }} ({{ branch.code|upper }})</option>
+        {% endfor %}
+    </select>
+    
+
+    <hr>
+
+    <p><label>Supplier</label>
+        <input type="text" name="supplier" class="form-control" />
+    </p>
+
+    <p><label>Item</label>
+        <input type="text" name="item" class="form-control" />
+    </p>
+
+    <p><label>Specifications</label>
+        <textarea type="text" name="specification" class="form-control"></textarea>
+    </p>
+
+    <p><label>Quantity</label>
+        <input type="number" name="quantity" class="form-control" />
+    </p>
+
+    <p><label>Price</label>
+        <input type="number" step="0.01" name="price" class="form-control" />
+    </p>
+
+    <p><label>Total Amount</label>
+        <input type="number" step="0.01" name="total_amount" class="form-control" />
+    </p>
+
+    <hr>
+
+    <p>Attachments : <label class="custom-file-upload">
+        <input type="file" name="attachments" id="fileInput" multiple style="display: none;">
+        <span id="chosenFileName">Choose a file...</span>
+        </label>
+    </p>
+
+    <p><label class="required">Remarks</label>
+        <textarea type="text" name="remarks" class="form-control" placeholder="Request Description, Purpose of Request"></textarea>
+    </p>
+
+    <label class="required">Select Verifier</label>
+    <select name="verifier" class="form-control">
+        {% for x in verifierList %}
+        <option value="{{ x.username }}">{{ x.username|capfirst }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="button-group">
+        <button type="submit" class="save-button" id="submitForm">Save</button>
+        <a href="/home" class="btn-back">
+            <button type="button">Back</button>
+        </a>
+    </div>
+</form>
+</div>
+
+<script>
+    $('#fileInput').change(function () {
+        var input = document.getElementById('fileInput');
+        var files = input.files;
+        if (files.length > 1) {
+            $('#chosenFileName').text(files.length + " files selected");
+        } else if (files.length == 1) {
+            var fileName = $(this).val().split('\\').pop();
+            $('#chosenFileName').text(fileName);
+        } else {
+            $('#chosenFileName').text("Choose files...");
+        }
+    });
+
+
+    document.getElementById('submitForm').addEventListener('click', function (event) {
+        var confirmation = confirm("Are you sure you want to submit this form?");
+        if (!confirmation) {
+            event.preventDefault(); // This will prevent the form from being submitted
+        }
+    });
+</script>
+
+{% endblock %}

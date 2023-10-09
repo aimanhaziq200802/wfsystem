@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+</div>
+{% endfor %}
+</div>
+
+<div id="quotation-verify-approve">
+
+    <h2>Purchase Requisition</h2>
+    <p><strong>Quotation ID:</strong> {{ quotation.qid }}</p>
+    <p><strong>Title:</strong> {{ quotation.title|capfirst }}</p>
+    <p><strong>Date Created:</strong> {{ quotation.date|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Prepared by:</strong> {{ quotation.initiator.username|capfirst }}</p>
+    <p><strong>Remarks:</strong> {{ quotation.remarks }}</p>
+
+    {% if quotation.attachments.all %}
+    <strong>Attachments:</strong>
+    {% for attachment in quotation.attachments.all %}
+    <p><a href="{{ attachment.file.url }}"><button>{{ attachment.filename }}</button></a></p>
+    {% endfor %}
+    {% endif %}
+
+    <hr>
+
+    <p><strong>Department:</strong> {{ quotation.department.name }} </p>
+    <p><strong>Branch:</strong> {{ quotation.branch.name }} ({{ quotation.branch.code }})</p>
+    <p><strong>Entity:</strong> {{ quotation.entity }}</p>
+    <p><strong>Supplier:</strong> {{ quotation.supplier }}</p>
+    <p><strong>Item:</strong> {{ quotation.item }}</p>
+    <p><strong>Specification:</strong> {{ quotation.specification }}</p>
+    <p><strong>Quantity:</strong> {{ quotation.quantity }}</p>
+    <p><strong>Price:</strong> {{ quotation.price }}</p>
+    <p><strong>Total Amount:</strong> {{ quotation.total_amount }}</p>
+    <hr>
+
+    <!-- Verify -->
+    <p><strong>Verified by:</strong> {{ quotation.verifier.username|capfirst }}</p>
+    <p><strong>Verification Status: {{ quotation.verify_status }}</strong></p>
+    <p><strong>Date of Verification:</strong> {{ quotation.verified_at|date:"d-m-Y g:i a" }}</p>
+    <P><strong>Verification Remarks:</strong> {{ quotation.verify_remarks }}</P>
+    <hr>
+
+    <!-- Approve -->
+    <p><strong>Approved by:</strong> {{ quotation.approver.username|capfirst }}</p>
+    <p><strong>Approval Status: {{ quotation.approve_status }}</strong></p>
+    <p><strong>Date of Approval:</strong> {{ quotation.approval_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Approval Remarks:</strong> {{ quotation.approval_remarks }}</p>
+    <hr>
+
+
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="select-wrapper">
+            <label for="approve_status">Change Approval Status:</label>
+            <select name="approve_status" id="approvalStatusDropdown">
+                {% for choice_value, choice_label in quotation.STATUS_CHOICES_APPROVER %}
+                <option value="{{ choice_value }}" {% if choice_value == quotation.approve_status %}selected{% endif %}>
+                    {{ choice_label|capfirst }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="select-wrapper" id="forwardToDiv" style="display: none;">
+            <label for="forward_to">Forward to:</label>
+            <select id="forward_to" name="forward_to">
+                <option value="final_approver">Final Approver</option>
+                <option value="finance">Finance</option>
+            </select>
+        </div>
+
+        <div class="select-wrapper" id="finalApproverList" style="display: none;">
+            <label for="final_approver">Select Final Approver:</label>
+            <select id="final_approver" name="final_approver">
+                {% for approver in final_approvers %}
+                <option value="{{ approver.username }}">{{ approver.username|capfirst }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="select-wrapper" id="financeList" style="display: none;">
+            <label for="finance_user">Select Finance:</label>
+            <select id="finance_user" name="finance_user">
+                {% for finance_user in finance_users %}
+                <option value="{{ finance_user.username }}">{{ finance_user.username|capfirst }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="select-wrapper" id="remarksDiv" style="display: none;">
+            <label><strong>Remarks/Comments: </strong></label>
+            <textarea type="text" name="approval_remarks" id="remarks" maxlength="50"
+                placeholder="Approval remarks..."></textarea>
+
+            <button type="submit" class="save-button" id="submitForm">Update Approval Status</button>
+
+        </div>
+
+    </form>
+
+    <a href="#" onclick="history.go(-1)" class="btn-back">
+        <button>Back to list</button>
+    </a>
+    <!-- ... rest of the content ... -->
+
+    <script>
+        const approvalDropdown = document.getElementById('approvalStatusDropdown');
+        const remarksDiv = document.getElementById('remarksDiv');
+        const forwardToDiv = document.getElementById('forwardToDiv');
+        const finalApproverList = document.getElementById('finalApproverList');
+        const financeList = document.getElementById('financeList');
+        const forwardToDropdown = document.getElementById('forward_to');
+
+        function toggleDisplayBasedOnSelection() {
+            if (approvalDropdown.value === "APPROVED") {
+                remarksDiv.style.display = "block";
+                forwardToDiv.style.display = "block";
+
+                if (forwardToDropdown.value === "final_approver") {
+                    finalApproverList.style.display = "block";
+                    financeList.style.display = "none";
+                } else {
+                    financeList.style.display = "block";
+                    finalApproverList.style.display = "none";
+                }
+            } else if (approvalDropdown.value === "REJECTED") {
+                remarksDiv.style.display = "block";
+                forwardToDiv.style.display = "none";
+                finalApproverList.style.display = "none";
+                financeList.style.display = "none";
+            } else {
+                remarksDiv.style.display = "none";
+                forwardToDiv.style.display = "none";
+                finalApproverList.style.display = "none";
+                financeList.style.display = "none";
+            }
+        }
+
+        approvalDropdown.addEventListener('change', toggleDisplayBasedOnSelection);
+        forwardToDropdown.addEventListener('change', toggleDisplayBasedOnSelection);
+        document.addEventListener('DOMContentLoaded', toggleDisplayBasedOnSelection);  // Initial toggle on page load
+
+        document.getElementById('submitForm').addEventListener('click', function (event) {
+            var confirmation = confirm("Are you sure with the changes you made?");
+            if (!confirmation) {
+                event.preventDefault(); // This will prevent the form from being submitted
+            }
+        });
+    </script>
+
+</div>
+{% endblock %}

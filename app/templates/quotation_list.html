@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="list-container">
+    <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </div>
+    {% endfor %}
+    <h2>My Quotations</h2>
+
+    <table id="quotation-list">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Verification Status</th>
+                <th>Verified At</th>
+                <th>Approval Status</th>
+                <th>Approved At</th>
+                <th>Final Approval Status</th>
+                <th>Final Approved At</th>
+                <th>Finance Status</th>
+                <th>Finance Reviewed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quotationList %}
+            <tr>
+                <td>
+                    <form action="{% url 'quotation_details' q.qid %}" method="get">
+                        <button class="btn-link-quotation_list" id="btn-link-quotation_list" type="submit">{{ q.title|capfirst }}</button>
+                    </form>
+                </td>
+                <td>{{ q.verify_status }}</td>
+                <td>{{ q.verified_at|date:"d-m-Y g:i a" }}</td>
+                <td>{{ q.approve_status }}</td>
+                <td>{{ q.approval_at|date:"d-m-Y g:i a"  }}</td>
+                <td>{{ q.final_approval_status }}</td>
+                <td>{{ q.final_approval_at|date:"d-m-Y g:i a" }}</td>
+                <td>{{ q.finance_status }}</td>
+                <td>{{ q.finance_reviewed_at|date:"d-m-Y g:i a"  }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" class="text-center">You do not have any quotations initiated by you.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="#" onclick="history.go(-1)" class="btn-back">
+        <button>Back</button>
+    </a>
+</div>
+
+
+{% endblock %}

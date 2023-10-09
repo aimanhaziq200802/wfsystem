@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+</head>
+
+<body>
+    <header>
+        <nav class="flex-container">
+            {% if user.is_authenticated %}
+            <div class="welcome-message">
+                <h2>Welcome, {{ user.username|capfirst }}!👋</h2>
+            </div>
+
+            <div class="logo-container">
+                <a href="/admin">
+                    <img src="{% static 'habiblogo.png' %}" alt="habibgrouplogo">
+                </a>
+
+            </div>
+
+            <div class="logout-container">
+                <a href="{% url 'home' %}" class="">Home
+                    <!-- <button>Home</button> -->
+                </a>
+                
+                <a href="{% url 'logout' %}" class="btn-logout">
+                    <button>Log Out</button>
+                </a>
+            </div>
+
+
+
+            {% endif %}
+        </nav>
+
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Default content can go here -->
+        {% endblock %}
+    </main>
+
+    <!-- <footer>
+        Copyright © 2023
+    </footer> -->
+</body>
+
+</html>

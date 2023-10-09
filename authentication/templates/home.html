@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+</div>
+{% endfor %}
+<div id="container">
+    
+    <!-- <p>Thanks for logging in to our platform.</p> -->
+
+    {% if user.userprofile.is_requester %}
+    <div class="section requester-section">
+        <!-- Requester Section -->
+        <h3>Requester Options</h3>
+        <a href="{% url 'create_request' %}" class="btn-link">
+            <button>Create New Request</button>
+        </a>
+        <a href="{% url 'quotation_list' %}" class="btn-link">
+            <button>My Quotations</button>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Verifier Section -->
+    {% if user.userprofile.is_verifier %}
+    <div class="section verifier-section">
+        <h3>Verifier Options</h3>
+        <a href="{% url 'verification_queue' %}" class="btn-link">
+            <button>Verifications Queue 
+            {% if quotations_awaiting_verification > 0 %}
+                <span class="queue-count">{{ quotations_awaiting_verification }}</span>
+            {% endif %}
+            </button>
+        </a>
+        <a href="{% url 'verification_history'%}" class="btn-link">
+            <button>Verifications History</button>
+        </a>
+    </div>
+
+    {% endif %}
+
+    <!-- Approver Section -->
+    {% if user.userprofile.is_approver %}
+    <div class="section approver-section">
+        <h3>Approver Options</h3>
+        <a href="{% url 'approval_queue' %}" class="btn-link">
+            <button>Approval Queue
+            {% if quotations_awaiting_approval > 0 %}
+                <span class="queue-count">{{ quotations_awaiting_approval }}</span>
+            {% endif %}
+            </button>
+        </a>
+
+        <a href="{% url 'approval_history'%}" class="btn-link">
+            <button>Approval History</button>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Final Approver Section -->
+    {% if user.userprofile.is_final_approver %}
+    <div class="section final-approver-section">
+        <h3>Final Approver Options</h3>
+
+        <!-- <a href="{% url 'all_quotations'%}" class="btn-link">
+            <button>All Quotations</button>
+        </a> -->
+
+        <a href="{% url 'final_approval_queue'%}" class="btn-link">
+            <button>Final Approval Queue
+            {% if quotations_awaiting_final_approval > 0 %}
+                <span class="queue-count">{{ quotations_awaiting_final_approval }}</span>
+            {% endif %}
+            </button>
+        </a>
+
+        <a href="{% url 'final_approval_history'%}" class="btn-link">
+            <button>Final Approval History</button>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Finance Section -->
+    {% if user.userprofile.is_finance %}
+    <div class="section finance-section">
+        <h3>Finance Options</h3>
+        <a href="{% url 'finance_queue'%}" class="btn-link">
+            <button>Finance Approval Queue
+            {% if quotations_awaiting_finance_approval > 0 %}
+                <span class="queue-count">{{ quotations_awaiting_finance_approval }}</span>
+            {% endif %}
+            </button>
+        </a>
+
+        <a href="{% url 'finance_history'%}" class="btn-link">
+            <button>Finance Approval History</button>
+        </a>
+    </div>
+    {% endif %}
+    
+
+    {% else %}
+    <div class="not-logged-in">
+        <h2>Welcome to Workflow System!</h2>
+        <p>Experience the efficiency and productivity boost of our platform.</p>
+    
+        <ul>
+            <li>🔐 Secure Data Management</li>
+            <li>🚀 Quick Approvals</li>
+            <li>📊 Real-time Reporting & Analytics</li>
+        </ul>
+    
+        <p>If you have an account, log in to start your seamless workflow journey.</p>
+        <a href="{% url 'login' %}" class="btn-logout">
+            <button>Log In</button>
+        </a>
+            
+
+    </div>
+    {% endif %}
+    
+    
+{% endblock %}

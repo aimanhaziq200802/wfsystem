@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+
+
+<div class="logo-container">
+    <a href="/admin">
+        <img src="{% static 'habiblogo.png' %}" alt="habibgrouplogo">
+    </a>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}{{ message.tags|title }}{% endif %}!</strong> {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+<a href="https://www.ibm.com/topics/workflow">
+    <h1>Workflow System</h1>
+</a>
+
+<div class="login-box">
+
+    <h2>Log In</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="error-credentials">
+            {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}"
+                class="my-custom-class" placeholder="Username" autocomplete="off" required />
+        </div>
+
+        <div class="form-group">
+            <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}"
+                class="my-custom-class" placeholder="Password" required />
+        </div>
+
+        <button class="login-button" type="submit">Log In</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="list-container">
+    <h2>Approval History</h2>
+
+    <table id="approve-history">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Requested By</th>
+                <th>Approval Status</th>
+                <th>Approval Date</th>
+                <!-- <th></th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quotations %}
+            <tr>
+                <td>
+                    <form action="{% url 'quotation_details' q.qid %}" method="get">
+                        <button class="btn-link-approve-history" id="btn-link-approve-history" type="submit">{{ q.title }}</button>
+                    </form>
+                </td>
+                <td>{{ q.initiator }}</td>
+                <td>{{ q.approve_status }}</td>
+                <td>{{ q.approval_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">You do not have any approval history available at the moment.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="#" onclick="history.go(-1)" class="btn-back">
+        <button>Back</button>
+    </a>
+    
+</div>
+
+{% endblock %}

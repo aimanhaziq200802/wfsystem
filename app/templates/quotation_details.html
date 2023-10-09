@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="quotation-details">
+
+    <div class="messages">
+        {% for message in messages %}
+        <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </div>
+    {% endfor %}
+</div>
+<!-- Initiator -->
+<h2>Purchase Requisition</h2>
+<p><strong>Quotation ID:</strong> {{ quotation.qid }}</p>
+<p><strong>Title:</strong> {{ quotation.title|capfirst }}</p>
+<p><strong>Date Created:</strong> {{ quotation.date|date:"d-m-Y g:i a" }}</p>
+<p><strong>Prepared by:</strong> {{ quotation.initiator.username|capfirst }}</p>
+<p><strong>Remarks:</strong> {{ quotation.remarks }}</p>
+
+{% if quotation.attachments.all %}
+    <strong>Attachments:</strong>
+    {% for attachment in quotation.attachments.all %}
+        <p><a href="{{ attachment.file.url }}"><button>{{ attachment.filename }}</button></a></p>
+    {% endfor %}
+{% endif %}
+<hr>
+
+<p><strong>Department:</strong> {{ quotation.department.name }} </p>
+<p><strong>Branch:</strong> {{ quotation.branch.name }} ({{ quotation.branch.code }})</p>
+<p><strong>Entity:</strong> {{ quotation.entity }}</p>
+<p><strong>Supplier:</strong> {{ quotation.supplier }}</p>
+<p><strong>Item:</strong> {{ quotation.item }}</p>
+<p><strong>Specification:</strong> {{ quotation.specification }}</p>
+<p><strong>Quantity:</strong> {{ quotation.quantity }}</p>
+<p><strong>Price:</strong> {{ quotation.price }}</p>
+<p><strong>Total Amount:</strong> {{ quotation.total_amount }}</p>
+<hr>
+
+<!-- Verify -->
+<p><strong>Verified by:</strong> {{ quotation.verifier.username|capfirst }}</p>
+<p><strong>Verification Status: {{ quotation.verify_status }}</strong></p>
+<p><strong>Date of Verification:</strong> {{ quotation.verified_at|date:"d-m-Y g:i a" }}</p>
+<P><strong>Verification Remarks:</strong> {{ quotation.verify_remarks }}</P>
+<hr>
+
+<!-- Approve -->
+<p><strong>Approved by:</strong> {{ quotation.approver.username|capfirst }}</p>
+<p><strong>Approval Status: {{ quotation.approve_status }}</strong></p>
+<p><strong>Date of Approval:</strong> {{ quotation.approval_at|date:"d-m-Y g:i a" }}</p>
+<p><strong>Approval Remarks:</strong> {{ quotation.approval_remarks }}</p>
+<hr>
+
+<!-- Final Approval -->
+<p>(Optional)</p>
+<p><strong>Final Approver:</strong> {{ quotation.final_approver.username|capfirst }}</p>
+<p><strong>Final Approval Status: {{ quotation.final_approval_status }}</strong></p>
+<p><strong>Date of Final Approval:</strong> {{ quotation.final_approval_at|date:"d-m-Y g:i a" }}</p>
+<p><strong>Final Approval Remarks:</strong> {{ quotation.final_approval_remarks }}</p>
+<hr>
+
+<!-- Finance -->
+<p><strong>Reviewed by (Finance):</strong> {{ quotation.finance_user.username|capfirst }}</p>
+<p><strong>Finance Status: {{ quotation.finance_status }}</strong></p>
+<p><strong>Finance Review Date:</strong> {{ quotation.finance_processed_at|date:"d-m-Y g:i a" }}</p>
+<p><strong>Finance Remarks:</strong> {{ quotation.finance_remarks }}</p>
+
+<a href="{% url 'export_quotation_to_excel' quotation.qid %}" class="btn-export">
+    <button>Export to Excel</button>
+</a>
+
+<!-- <a href="/">Back to home</a> -->
+
+<a href="#" onclick="history.go(-1)" class="btn-back">
+    <button>Back to list</button>
+</a>
+
+</div>
+
+
+
+{% endblock %}

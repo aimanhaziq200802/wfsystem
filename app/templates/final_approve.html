@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+</div>
+{% endfor %}
+</div>
+
+<div id="quotation-verify-approve">
+
+    <h2>{{ quotation.title|capfirst }}</h2>
+    <p><strong>Date Created:</strong> {{ quotation.date|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Department:</strong> {{ quotation.department.name }}</p>
+    <p><strong>Branch:</strong> {{ quotation.branch.name }}</p>
+    <p><strong>Entity:</strong> {{ quotation.entity }}</p>
+    <p><strong>Supplier:</strong> {{ quotation.supplier }}</p>
+    <p><strong>Item:</strong> {{ quotation.item }}</p>
+    <p><strong>Specification:</strong> {{ quotation.specification }}</p>
+    <p><strong>Quantity:</strong> {{ quotation.quantity }}</p>
+    <p><strong>Price:</strong> {{ quotation.price }}</p>
+    <p><strong>Total Amount:</strong> {{ quotation.total_amount }}</p>
+
+    {% if quotation.attachment %}
+    <p><strong>Attachment:</strong> <a href="{{ quotation.attachment.url }}"><button>Open File</button></a></p>
+    {% endif %}
+
+    <p><strong>Prepared by:</strong> {{ quotation.initiator.username|capfirst }}</p>
+    <p><strong>Remarks:</strong> {{ quotation.remarks }}</p>
+    <hr>
+    <!-- Verify -->
+    <p><strong>Verified by:</strong> {{ quotation.verifier.username|capfirst }}</p>
+    <p><strong>Date of Verification:</strong> {{ quotation.verified_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Verification Status: {{ quotation.verify_status }}</strong></p>
+    <P><strong>Verification Remarks:</strong> {{ quotation.verify_remarks }}</P>
+    <hr>
+    <!-- Approve -->
+    <p><strong>Approved by:</strong> {{ quotation.approver.username|capfirst }}</p>
+    <p><strong>Date of Approval:</strong> {{ quotation.approval_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Approval Status: {{ quotation.approve_status }}</strong></p>
+    <p><strong>Approval Remarks:</strong> {{ quotation.approval_remarks }}</p>
+    <hr>
+
+    <!-- Final Approval -->
+    <p><strong>Approved by Final Approver:</strong> {{ quotation.final_approver.username|capfirst }}</p>
+    <p><strong>Date of Final Approval:</strong> {{ quotation.final_approval_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Final Approval Status: {{ quotation.final_approval_status }}</strong></p>
+    <p><strong>Final Approval Remarks:</strong> {{ quotation.final_approval_remarks }}</p>
+    <hr>
+
+    <!-- Finance -->
+    <p><strong>Reviewed by Finance:</strong> {{ quotation.finance_reviewer.username|capfirst }}</p>
+    <p><strong>Finance Review Date:</strong> {{ quotation.finance_processed_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Finance Status: {{ quotation.finance_status }}</strong></p>
+    <p><strong>Finance Remarks:</strong> {{ quotation.finance_remarks }}</p>
+    <hr>
+    <!-- Approval by Final Approver -->
+    <p><strong>Final Approval Status:</strong> {{ quotation.final_approval_status }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+
+        <div class="select-wrapper">
+            <label for="approve_status">Change Final Approval Status:</label>
+            <select name="approve_status" id="approvalStatusDropdown">
+                {% for choice_value, choice_label in quotation.FINAL_APPROVER_STATUS_CHOICES %}
+                <option value="{{ choice_value }}" {% if choice_value == quotation.final_approval_status %}selected{% endif %}>
+                    {{ choice_label|capfirst }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>        
+
+        <div class="select-wrapper" id="financeList" >
+            <label for="finance_user">Select Finance:</label>
+            <select id="finance_user" name="finance_user">
+                {% for finance_user in finance_users %}
+                <option value="{{ finance_user.username }}">{{ finance_user.username|capfirst }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="remarks-section" id="remarksSection">
+            <label><strong>Remarks/Comments:</strong></label><br>
+            <textarea type="text" name="final_approval_remarks" id="remarks" maxlength="100" placeholder="Final approval remarks..."></textarea>
+            <span id="countdown">50/50</span>
+
+
+            <button type="submit" class="save-button" id="updateButton">Update Final Approval Status</button>
+
+        </div>
+        
+        
+    </form>
+
+    <a href="#" onclick="history.go(-1)" class="btn-back">
+        <button>Back to list</button>
+    </a>
+
+</div>
+
+<script>
+    const approvalDropdown = document.getElementById('approvalStatusDropdown');
+    const remarksSection = document.getElementById('remarksSection');
+    const financeList = document.getElementById('financeList');
+
+    function adjustDisplayBasedOnApprovalStatus() {
+        const selectedStatus = approvalDropdown.value;
+
+        if (selectedStatus === "PENDING") {
+            remarksSection.style.display = 'none';
+            financeList.style.display = 'none';
+        } else if (selectedStatus === "REJECTED") {
+            remarksSection.style.display = 'block';
+            financeList.style.display = 'none';
+        } else if (selectedStatus === "APPROVED") {
+            remarksSection.style.display = 'block';
+            financeList.style.display = 'block';
+        }
+    }
+
+    // Attach an event listener
+    approvalDropdown.addEventListener('change', adjustDisplayBasedOnApprovalStatus);
+
+    // Call function on page load to set the initial state
+    adjustDisplayBasedOnApprovalStatus();
+
+    document.getElementById('updateButton').addEventListener('click', function (event) {
+        var confirmation = confirm("Are you sure with the changes you made?");
+        if (!confirmation) {
+            event.preventDefault(); // This will prevent the form from being submitted
+        }
+    });    
+
+</script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="list-container">
+    <h2>Verifications Queue</h2>
+
+    <table id="verification-queue">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Requested By</th>
+                <th>Requested At</th>
+    
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quotationList %}
+            <tr>
+                <td>
+                    <form action="{% url 'quotation_verify' q.qid %}" method="get">
+                        <button class="btn-link-verification-queue" id="btn-link-verification-queue" type="submit">{{ q.title|capfirst }}</button>
+                    </form>
+                </td>
+                <td>{{ q.initiator|capfirst }}</td>
+                <td>{{ q.date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">You do not have any quotations assigned to you</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="#" onclick="history.go(-1)" class="btn-back">
+        <button>Back</button>
+    </a>
+</div>
+
+
+{% endblock %}
