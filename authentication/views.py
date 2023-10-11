@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from app.models import Quotation
+from django.views.decorators.cache import cache_control
 
 
 class LoginForm(forms.Form):
@@ -55,7 +56,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 
         return self.cleaned_data
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def queue_counter(request):
     # Count quotations awaiting verification and assigned to the logged-in user as verifier
     quotations_awaiting_verification = Quotation.objects.filter(

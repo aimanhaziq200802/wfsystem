@@ -51,7 +51,7 @@
 
     <!-- Finance -->
     <p><strong>Reviewed by Finance:</strong> {{ quotation.finance_reviewer.username|capfirst }}</p>
-    <p><strong>Finance Review Date:</strong> {{ quotation.finance_processed_at|date:"d-m-Y g:i a" }}</p>
+    <p><strong>Finance Review Date:</strong> {{ quotation.finance_reviewed_at|date:"d-m-Y g:i a" }}</p>
     <p><strong>Finance Status: {{ quotation.finance_status }}</strong></p>
     <p><strong>Finance Remarks:</strong> {{ quotation.finance_remarks }}</p>
     <hr>
@@ -102,6 +102,13 @@
 </div>
 
 <script>
+
+    window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+    };
+
     const approvalDropdown = document.getElementById('approvalStatusDropdown');
     const remarksSection = document.getElementById('remarksSection');
     const financeList = document.getElementById('financeList');

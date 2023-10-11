@@ -91,6 +91,12 @@
 </div>
 
 <script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+
     const verificationDropdown = document.getElementById('verificationStatusDropdown');
     const approverDiv = document.getElementById('approverDiv');
     const remarksDiv = document.getElementById('remarksDiv');

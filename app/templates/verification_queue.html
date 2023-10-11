@@ -10,7 +10,7 @@
                 <th>Title</th>
                 <th>Requested By</th>
                 <th>Requested At</th>
-    
+
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
             <tr>
                 <td>
                     <form action="{% url 'quotation_verify' q.qid %}" method="get">
-                        <button class="btn-link-verification-queue" id="btn-link-verification-queue" type="submit">{{ q.title|capfirst }}</button>
+                        <button class="btn-link-verification-queue" id="btn-link-verification-queue" type="submit">{{q.title|capfirst }}</button>
                     </form>
                 </td>
                 <td>{{ q.initiator|capfirst }}</td>
@@ -31,11 +31,19 @@
             {% endfor %}
         </tbody>
     </table>
-    
+
     <a href="#" onclick="history.go(-1)" class="btn-back">
         <button>Back</button>
     </a>
 </div>
+
+<script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
 
 
 {% endblock %}

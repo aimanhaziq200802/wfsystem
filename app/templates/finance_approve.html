@@ -91,6 +91,11 @@
 </div>
 
 <script>
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
     const verificationDropdown = document.getElementById('verificationStatusDropdown');
     const remarksDiv = document.getElementById('remarksDiv');
     const remarksTextarea = document.getElementById('remarks');

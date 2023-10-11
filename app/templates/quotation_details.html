@@ -62,7 +62,7 @@
 <!-- Finance -->
 <p><strong>Reviewed by (Finance):</strong> {{ quotation.finance_user.username|capfirst }}</p>
 <p><strong>Finance Status: {{ quotation.finance_status }}</strong></p>
-<p><strong>Finance Review Date:</strong> {{ quotation.finance_processed_at|date:"d-m-Y g:i a" }}</p>
+<p><strong>Finance Review Date:</strong> {{ quotation.finance_reviewed_at|date:"d-m-Y g:i a" }}</p>
 <p><strong>Finance Remarks:</strong> {{ quotation.finance_remarks }}</p>
 
 <a href="{% url 'export_quotation_to_excel' quotation.qid %}" class="btn-export">
@@ -77,6 +77,13 @@
 
 </div>
 
+<script>
+        window.onpageshow = function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>
 
 
 {% endblock %}

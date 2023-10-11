@@ -109,6 +109,13 @@
     <!-- ... rest of the content ... -->
 
     <script>
+
+        window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+        };
+
         const approvalDropdown = document.getElementById('approvalStatusDropdown');
         const remarksDiv = document.getElementById('remarksDiv');
         const forwardToDiv = document.getElementById('forwardToDiv');

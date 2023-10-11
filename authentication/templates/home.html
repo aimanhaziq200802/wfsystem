@@ -11,7 +11,7 @@
 </div>
 {% endfor %}
 <div id="container">
-    
+
     <!-- <p>Thanks for logging in to our platform.</p> -->
 
     {% if user.userprofile.is_requester %}
@@ -32,10 +32,10 @@
     <div class="section verifier-section">
         <h3>Verifier Options</h3>
         <a href="{% url 'verification_queue' %}" class="btn-link">
-            <button>Verifications Queue 
-            {% if quotations_awaiting_verification > 0 %}
+            <button>Verifications Queue
+                {% if quotations_awaiting_verification > 0 %}
                 <span class="queue-count">{{ quotations_awaiting_verification }}</span>
-            {% endif %}
+                {% endif %}
             </button>
         </a>
         <a href="{% url 'verification_history'%}" class="btn-link">
@@ -51,9 +51,9 @@
         <h3>Approver Options</h3>
         <a href="{% url 'approval_queue' %}" class="btn-link">
             <button>Approval Queue
-            {% if quotations_awaiting_approval > 0 %}
+                {% if quotations_awaiting_approval > 0 %}
                 <span class="queue-count">{{ quotations_awaiting_approval }}</span>
-            {% endif %}
+                {% endif %}
             </button>
         </a>
 
@@ -74,9 +74,9 @@
 
         <a href="{% url 'final_approval_queue'%}" class="btn-link">
             <button>Final Approval Queue
-            {% if quotations_awaiting_final_approval > 0 %}
+                {% if quotations_awaiting_final_approval > 0 %}
                 <span class="queue-count">{{ quotations_awaiting_final_approval }}</span>
-            {% endif %}
+                {% endif %}
             </button>
         </a>
 
@@ -92,9 +92,9 @@
         <h3>Finance Options</h3>
         <a href="{% url 'finance_queue'%}" class="btn-link">
             <button>Finance Approval Queue
-            {% if quotations_awaiting_finance_approval > 0 %}
+                {% if quotations_awaiting_finance_approval > 0 %}
                 <span class="queue-count">{{ quotations_awaiting_finance_approval }}</span>
-            {% endif %}
+                {% endif %}
             </button>
         </a>
 
@@ -103,27 +103,34 @@
         </a>
     </div>
     {% endif %}
-    
+
 
     {% else %}
     <div class="not-logged-in">
         <h2>Welcome to Workflow System!</h2>
         <p>Experience the efficiency and productivity boost of our platform.</p>
-    
+
         <ul>
             <li>🔐 Secure Data Management</li>
             <li>🚀 Quick Approvals</li>
             <li>📊 Real-time Reporting & Analytics</li>
         </ul>
-    
+
         <p>If you have an account, log in to start your seamless workflow journey.</p>
         <a href="{% url 'login' %}" class="btn-logout">
             <button>Log In</button>
         </a>
-            
+
 
     </div>
     {% endif %}
-    
-    
-{% endblock %}
+
+    <script>
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+
+    {% endblock %}
