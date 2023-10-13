@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from app.models import Quotation
 from django.views.decorators.cache import cache_control
+from django.utils import timezone
 
 
 class LoginForm(forms.Form):
@@ -80,10 +81,10 @@ def queue_counter(request):
         finance_user=request.user
     ).count()  
 
-
+    current_hour = timezone.localtime(timezone.now()).hour
 
     context = {
-        # ... your other context data ...
+        'current_hour': current_hour,
         'quotations_awaiting_verification': quotations_awaiting_verification,
         'quotations_awaiting_approval': quotations_awaiting_approval,
         'quotations_awaiting_final_approval' : quotations_awaiting_final_approval,

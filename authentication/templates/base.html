@@ -19,32 +19,28 @@
         <nav class="flex-container">
             {% if user.is_authenticated %}
             <div class="welcome-message">
-                <h2>Welcome, {{ user.username|capfirst }}!👋</h2>
+                <h2 id="greeting-placeholder">Welcome, {{ user.username|capfirst }}!👋</h2>
             </div>
-
+    
             <div class="logo-container">
                 <a href="/admin">
                     <img src="{% static 'habiblogo.png' %}" alt="habibgrouplogo">
                 </a>
-
             </div>
-
+    
             <div class="logout-container">
                 <a href="{% url 'home' %}" class="">Home
                     <!-- <button>Home</button> -->
                 </a>
-
+    
                 <a href="{% url 'logout' %}" class="btn-logout">
                     <button>Log Out</button>
                 </a>
             </div>
-
-
-
             {% endif %}
         </nav>
-
     </header>
+    
 
     <main>
         {% block content %}
@@ -56,5 +52,20 @@
         Copyright © 2023
     </footer> -->
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let date = new Date();
+        let current_hour = date.getHours();
+        let greetingElement = document.getElementById('greeting-placeholder');
+        
+        if (current_hour < 12) {
+            greetingElement.textContent = "Good morning, {{ user.username|capfirst }}!👋";
+        } else {
+            greetingElement.textContent = "Good evening, {{ user.username|capfirst }}!👋";
+        }
+    });
+</script>
+
 
 </html>
